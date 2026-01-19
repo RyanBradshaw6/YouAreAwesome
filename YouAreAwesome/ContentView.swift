@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var message = ""
-    @State private var check = 0
     @State private var imageName = ""
+    @State private var imageNumber = 0
     var body: some View {
         VStack {
             Spacer()
-                Image(imageName)
+            Image(imageName)
                 .resizable()
                 .scaledToFit()
                 .clipShape(.rect(cornerRadius: 20))
@@ -29,23 +29,27 @@ struct ContentView: View {
                 Button("Press Me!") {
                     let message1 = "You are Awesome!"
                     let message2 = "You are Great!"
-                    let imageName1 = "image0"
-                    let imageName2 = "image1"
+                  
                     message = (message == message1 ? message2 : message1)
-                    imageName = (imageName == imageName1 ? imageName2 : imageName1)
+              
+                    imageName = "image\(imageNumber)"
+                    imageNumber += 1
+                    if imageNumber > 9 {
+                        imageNumber = 0
+                    }
                     
                     
                     
                     
                 }
-                }
-                .buttonStyle(.borderedProminent)
-                .font(.title2)
             }
-            .padding()
+            .buttonStyle(.borderedProminent)
+            .font(.title2)
         }
+        .padding()
     }
-    
-    #Preview {
-        ContentView()
-    }
+}
+
+#Preview {
+    ContentView()
+}
