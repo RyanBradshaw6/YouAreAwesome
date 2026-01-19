@@ -30,13 +30,9 @@ struct ContentView: View {
                     let message2 = "You are Great!"
                     let imageName1 = "sun.max.fill"
                     let imageName2 = "hand.thumbsup"
-                    if message == message1 {
-                        message = message2
-                        imageName = imageName2
-                    } else {
-                        message = message1
-                        imageName = imageName1
-                    }
+                    message = (message == message1 ? message2 : message1)
+                    imageName = (imageName == imageName1 ? imageName2 : imageName1)
+                    
                     
                     
                     
