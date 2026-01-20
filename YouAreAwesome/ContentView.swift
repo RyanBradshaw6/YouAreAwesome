@@ -31,7 +31,6 @@ struct ContentView: View {
                     let message2 = "You are Great!"
                   
                     message = (message == message1 ? message2 : message1)
-              
                     imageName = "image\(imageNumber)"
                     imageNumber += 1
                     if imageNumber > 9 {
