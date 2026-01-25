@@ -11,6 +11,9 @@ struct ContentView: View {
     @State private var message = ""
     @State private var imageName = ""
     @State private var imageNumber = 0
+    @State private var counter = 0
+
+    @State private var messages : [String] = ["Led Zeppelin IV", "Random Access Memories", "Dirt", "American Football", "Revolver","Van Halen", "Raise!", "Dookie", "Wish You Were Here", "Who's Next" ]
     var body: some View {
         VStack {
             Spacer()
@@ -23,18 +26,22 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .fontWeight(.heavy)
                 .foregroundStyle(.red)
+                .multilineTextAlignment(.center)
             Spacer()
             HStack{
                 
                 Button("Press Me!") {
-                    let message1 = "You are Awesome!"
-                    let message2 = "You are Great!"
-                  
-                    message = (message == message1 ? message2 : message1)
+                    
+                    message = messages[counter]
+                    counter += 1
+                    if counter == messages.count {
+                        counter = 0
+                    }
                     imageName = "image\(imageNumber)"
                     imageNumber += 1
                     if imageNumber > 9 {
                         imageNumber = 0
+                        
                     }
                     
                     
