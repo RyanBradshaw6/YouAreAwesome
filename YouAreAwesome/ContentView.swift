@@ -20,6 +20,7 @@ struct ContentView: View {
     @State private var audioPlayer: AVAudioPlayer!
     @State private var lastSoundNumber = -1
     let numberofSounds = 6
+    @State private var soundIsOn = true
     
     @State private var messages : [String] = ["Led Zeppelin IV", "Random Access Memories by Daft Punk, featuring Pharrell Williams", "Dirt", "American Football", "Revolver","Van Halen", "Raise!", "Dookie", "Wish You Were Here", "Who's Next" ]
     var body: some View {
@@ -42,6 +43,14 @@ struct ContentView: View {
             
             Spacer()
             HStack{
+                Text("Sound On:")
+                Toggle("", isOn: $soundIsOn)
+                    .labelsHidden()
+                    .onChange(of: soundIsOn){
+                        if audioPlayer != nil && audioPlayer.isPlaying{
+                            audioPlayer.stop()
+                        }
+                    }
                 
                 Button("Show Message") {
                     lastMessageNumber = nonRepeatingRandom(lastNumber:lastMessageNumber, upperBounds: messages.count-1)
@@ -49,9 +58,11 @@ struct ContentView: View {
                     
                     lastImageNumber = nonRepeatingRandom(lastNumber: lastImageNumber, upperBounds: numberOfImages)
                     imageName = "image\(lastImageNumber)"
+                    if soundIsOn == true{
+                        lastSoundNumber = nonRepeatingRandom(lastNumber: lastSoundNumber, upperBounds: numberofSounds)
+                        playSound(soundName: "sound\(lastSoundNumber)")
+                    }
                     
-                    lastSoundNumber = nonRepeatingRandom(lastNumber: lastSoundNumber, upperBounds: numberofSounds)
-                    playSound(soundName: "sound\(lastSoundNumber)")
                     
                     
                     
@@ -64,6 +75,9 @@ struct ContentView: View {
         .padding()
     }
     func playSound(soundName: String){
+        if audioPlayer != nil && audioPlayer.isPlaying{
+            audioPlayer.stop()
+        }
         guard let soundFile = NSDataAsset(name: soundName) else{
             print("🤬 Could not read file named \(soundName)")
             return
